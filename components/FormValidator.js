@@ -78,8 +78,7 @@ class FormValidator {
   }
 
   resetValidation() {
-    this._formElement.name.value = "";
-    this._formElement.date.value = "";
+    this._formElement.reset();
     this._toggleButtonState();
   }
 }
