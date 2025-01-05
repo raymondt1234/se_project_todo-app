@@ -11,7 +11,6 @@ class Todo {
 
     this._todoCheckboxEl.addEventListener("change", (event) => {
       this._data.completed = !this._data.completed;
-      console.log(this._todoCheckboxEl.checked);
     });
   }
 
@@ -24,7 +23,7 @@ class Todo {
   }
 
   _generateDueDate() {
-      const dueDate = new Date(this._data.date);
+    const dueDate = new Date(this._data.date);
     if (!isNaN(dueDate)) {
       this._todoDate.textContent = `Due: ${dueDate.toLocaleString("en-US", {
         year: "numeric",
@@ -47,8 +46,6 @@ class Todo {
     this._generateCheckBox();
     this._generateDueDate();
     this._setEventListener();
-
-
 
     return this._todoElement;
   }
