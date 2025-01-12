@@ -4,11 +4,14 @@ import Todo from "../components/Todo.js";
 import Section from "../components/Section.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import TodoCounter from "../components/TodoCounter.js";
 
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopupElement = document.querySelector("#add-todo-popup");
 const addTodoForm = document.forms["add-todo-form"];
 const addTodoCloseBtn = addTodoPopupElement.querySelector(".popup__close");
+
+const todoCounter = new TodoCounter(initialTodos, ".counter__text");
 
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
@@ -26,6 +29,7 @@ const addTodoPopup = new PopupWithForm({
 
     const todo = generateTodo(values);
     section.addItem(todo);
+    todoCounter.updateTotal(true);
     addTodoPopup.close();
     newTodoValidator.resetValidation();
   },
@@ -33,8 +37,19 @@ const addTodoPopup = new PopupWithForm({
 
 addTodoPopup.setEventListeners();
 
+function handleCheck(completed){
+  todoCounter.updateCompleted(completed);
+}
+
+function handleDelete(completed) {
+  todoCounter.updateTotal(false);
+  if (completed) {
+    todoCounter.updateCompleted(!completed);
+  }
+}
+
 const generateTodo = (data) => {
-  const todo = new Todo(data, "#todo-template");
+  const todo = new Todo(data, "#todo-template", handleCheck, handleDelete);
   const todoElement = todo.getView();
 
   return todoElement;
